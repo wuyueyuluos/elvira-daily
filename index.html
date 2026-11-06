@@ -20,7 +20,7 @@ header{height:54px;display:flex;align-items:center;justify-content:space-between
 .window:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 44%,#fff9 45% 46%,transparent 47% 100%),linear-gradient(180deg,transparent 68%,#fff7 69% 70%,transparent 71%)}
 .room{position:absolute;bottom:0;left:0;right:0;height:23%;background:linear-gradient(0deg,#c9b8bb,#e7d8d9);clip-path:polygon(0 28%,100% 0,100% 100%,0 100%)}
 .plant{position:absolute;right:10%;bottom:18%;font-size:58px;filter:saturate(.65);opacity:.65}
-.character{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);width:min(78%,340px);height:84%;display:flex;align-items:flex-end;justify-content:center}
+.character{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(92%,440px);height:100%;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}.character-art{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 10px 14px #65545a20);transition:opacity .2s ease}
 .avatar{position:relative;width:78%;height:100%}
 .hair-back{position:absolute;left:9%;top:5%;width:82%;height:80%;background:#9cc8b9;border-radius:48% 48% 42% 42%;box-shadow:inset -14px -5px #83b5a6}
 .neck{position:absolute;z-index:2;left:42%;top:43%;width:17%;height:20%;background:#f2d9d0;border-radius:30%}
@@ -47,7 +47,7 @@ nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.navbtn{border:1px 
 <div class="meter"><b>好感 <span id="affv">12</span></b><div class="track"><i id="affbar" style="width:12%"></i></div></div>
 <div class="meter"><b>心情 <span id="moodv">72</span></b><div class="track"><i id="moodbar" style="width:72%"></i></div></div>
 <div class="meter"><b>体力 <span id="energyv">90</span></b><div class="track"><i id="energybar" style="width:90%"></i></div></div></div></section>
-<section class="scene" aria-label="艾尔薇拉的房间"><div class="window"></div><div class="room"></div><div class="plant">♧</div><div class="scene-note" id="sceneNote">艾尔薇拉的房间 · 上午</div><div class="character"><div class="avatar"><div class="hair-back"></div><div class="neck"></div><div class="body"></div><div class="face"><i class="eye left"></i><i class="eye right"></i><i class="blush l"></i><i class="blush r"></i><i class="mouth"></i></div><div class="bangs"></div><div class="ribbon"></div></div></div></section>
+<section class="scene" aria-label="艾尔薇拉的房间"><div class="window"></div><div class="room"></div><div class="plant">♧</div><div class="scene-note" id="sceneNote">艾尔薇拉的房间 · 上午</div><div class="character"><img class="character-art" id="characterArt" src="assets/elvira/sprites/base/elvira_standing.png" alt="艾尔薇拉"></div></section>
 <section class="dialogue"><div class="speaker" id="speaker">艾尔薇拉</div><div class="line" id="line">早上好呀。今天的阳光很舒服呢……你想先做些什么？</div></section>
 <section class="choices" id="choices">
 <button class="choice" onclick="choose('talk')">「陪我聊一会儿吧。」<small>聊聊最近的生活，了解她的想法</small></button>
@@ -58,23 +58,26 @@ nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.navbtn{border:1px 
 <section class="panel" id="life"><h3>一起做点什么</h3><div class="panel-actions"><button class="pill" onclick="activity('散步',35,3,5)">去散步</button><button class="pill" onclick="activity('听音乐',20,2,4)">听音乐</button><button class="pill" onclick="activity('整理房间',25,1,2)">整理房间</button><button class="pill" onclick="activity('做点心',40,3,6)">一起做点心</button></div></section>
 <section class="panel" id="schedule"><h3>今天的日程</h3><p>09:00　慢慢享用早餐</p><p>10:00　整理书桌、读一会儿书</p><p>14:00　下午自由时间（可以邀请她一起外出）</p><p>20:30　睡前阅读</p><p>日程会随着星期、天气、心情和剧情逐步丰富。</p></section>
 <section class="panel" id="memories"><h3>共同回忆</h3><p id="memoryText">你们刚刚开始认识。一起经历的事情会被记录在这里。</p></section>
-<section class="panel" id="profile"><h3>艾尔薇拉</h3><p>喜欢：薄荷茶、植物、安静的书店、下雨天的音乐。</p><p>性格：温柔细腻，偶尔有点小傲娇。熟悉之后会更主动表达自己的想法。</p><p>关系：初识 · 正在慢慢了解彼此。</p></section>
+<section class="panel" id="profile"><h3>艾尔薇拉</h3><p>喜欢：薄荷茶、植物、安静的书店、下雨天的音乐。</p><p>性格：温柔细腻，偶尔有点小傲娇。熟悉之后会更主动表达自己的想法。</p><p>关系：初识 · 正在慢慢了解彼此。</p><h3 style="margin-top:14px">表情预览</h3><div class="panel-actions"><button class="pill" onclick="setExpression('neutral')">平静</button><button class="pill" onclick="setExpression('happy')">开心</button><button class="pill" onclick="setExpression('shy')">害羞</button><button class="pill" onclick="setExpression('sleepy')">困倦</button><button class="pill" onclick="setExpression('upset')">委屈</button><button class="pill" onclick="setExpression('angry')">生气</button></div></section>
 <section class="panel" id="settings"><h3>游戏设置</h3><div class="panel-actions"><button class="pill" onclick="save()">保存进度</button><button class="pill" onclick="load()">读取进度</button><button class="pill" onclick="advance()">结束今天 / 下一天</button></div><p>进度保存在当前浏览器设备中。</p></section>
 </main><div class="toast" id="toast"></div>
 <script>
-const initial={day:1,hour:9,minute:0,aff:12,mood:72,energy:90,trust:5,familiarity:2,memories:[],flags:{},lastChoice:""};
+const initial={day:1,hour:9,minute:0,aff:12,mood:72,energy:90,trust:5,familiarity:2,memories:[],flags:{},lastChoice:"",expression:"neutral"};
+const expressionFiles={neutral:"elvira_expr_neutral.png",happy:"elvira_expr_happy.png",shy:"elvira_expr_shy.png",sleepy:"elvira_expr_sleepy.png",upset:"elvira_expr_upset.png",angry:"elvira_expr_angry.png"};
+const expressionLabels={neutral:"平静",happy:"开心",shy:"害羞",sleepy:"困倦",upset:"委屈",angry:"生气"};
 let s={...initial,...JSON.parse(localStorage.getItem("elvira-v02")||"{}")};
 const $=id=>document.getElementById(id);const clamp=n=>Math.max(0,Math.min(100,n));
-function render(){let wd=["周一","周二","周三","周四","周五","周六","周日"][(s.day-1)%7];$("date").textContent=(s.day<=30?"春季":"夏季")+" · 第 "+s.day+" 天";$("time").textContent=(s.hour<12?"上午 ":"下午 ")+String(s.hour%12||12).padStart(2,"0")+":"+String(s.minute).padStart(2,"0")+" · "+wd;$("affv").textContent=s.aff;$("moodv").textContent=s.mood;$("energyv").textContent=s.energy;$("affbar").style.width=s.aff+"%";$("moodbar").style.width=s.mood+"%";$("energybar").style.width=s.energy+"%";$("sceneNote").textContent="艾尔薇拉的房间 · "+(s.hour<11?"上午":s.hour<18?"下午":"夜晚");$("memoryText").textContent=s.memories.length?s.memories.slice(-5).map(x=>"· "+x).join("\n"):"你们刚刚开始认识。一起经历的事情会被记录在这里。"}
+function setExpression(name){if(!expressionFiles[name])return;s.expression=name;const img=$("characterArt");img.style.opacity="0.35";img.onload=()=>{img.style.opacity="1"};img.src="assets/elvira/expressions/"+expressionFiles[name];img.alt="艾尔薇拉 · "+expressionLabels[name];}
+function render(){let wd=["周一","周二","周三","周四","周五","周六","周日"][(s.day-1)%7];$("date").textContent=(s.day<=30?"春季":"夏季")+" · 第 "+s.day+" 天";$("time").textContent=(s.hour<12?"上午 ":"下午 ")+String(s.hour%12||12).padStart(2,"0")+":"+String(s.minute).padStart(2,"0")+" · "+wd;$("affv").textContent=s.aff;$("moodv").textContent=s.mood;$("energyv").textContent=s.energy;$("affbar").style.width=s.aff+"%";$("moodbar").style.width=s.mood+"%";$("energybar").style.width=s.energy+"%";$("sceneNote").textContent="艾尔薇拉的房间 · "+(s.hour<11?"上午":s.hour<18?"下午":"夜晚");$("memoryText").textContent=s.memories.length?s.memories.slice(-5).map(x=>"· "+x).join("\n"):"你们刚刚开始认识。一起经历的事情会被记录在这里。";setExpression(s.expression||"neutral")}
 function say(t){$("speaker").textContent="艾尔薇拉";$("line").textContent=t}
 function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),1600)}
 function addMemory(t){if(!s.memories.includes(t))s.memories.push(t)}
 function tick(m=20){s.minute+=m;while(s.minute>=60){s.minute-=60;s.hour++}if(s.hour>=24){s.hour=0;s.day++;s.mood=clamp(s.mood+8);s.energy=clamp(s.energy+35);say("新的一天开始啦。今天也请多多关照哦。");addMemory("一起迎来了第 "+s.day+" 天。")}render()}
-function choose(k){s.lastChoice=k;if(k==="talk"){s.aff=clamp(s.aff+2);s.trust=clamp(s.trust+2);s.familiarity=clamp(s.familiarity+2);s.mood=clamp(s.mood+3);say("嗯，我也想和你聊聊。最近我在想，人与人之间是不是就是从这样的小小对话开始熟悉起来的呢？");addMemory("在房间里聊了很久，彼此更熟悉了一点。");tick(25)}
-if(k==="tea"){s.aff=clamp(s.aff+2);s.trust=clamp(s.trust+1);s.mood=clamp(s.mood+8);s.energy=clamp(s.energy-3);say("好呀。我来准备茶具……嗯，今天想喝带一点花香的薄荷茶。和你一起喝，感觉会更好喝。");addMemory("一起泡了薄荷茶，度过了安静的午前时光。");tick(35)}
-if(k==="book"){s.familiarity=clamp(s.familiarity+4);s.trust=clamp(s.trust+1);s.aff=clamp(s.aff+1);say("是一本关于植物和旅行的随笔。里面有一段写到春天的山间小路，我很喜欢。以后有机会的话，想和你一起去看看。");addMemory("知道了艾尔薇拉最近喜欢读植物与旅行随笔。");tick(20)}
+function choose(k){s.lastChoice=k;if(k==="talk"){s.expression=s.aff>=20?"shy":"neutral";s.aff=clamp(s.aff+2);s.trust=clamp(s.trust+2);s.familiarity=clamp(s.familiarity+2);s.mood=clamp(s.mood+3);say("嗯，我也想和你聊聊。最近我在想，人与人之间是不是就是从这样的小小对话开始熟悉起来的呢？");addMemory("在房间里聊了很久，彼此更熟悉了一点。");tick(25)}
+if(k==="tea"){s.expression="happy";s.aff=clamp(s.aff+2);s.trust=clamp(s.trust+1);s.mood=clamp(s.mood+8);s.energy=clamp(s.energy-3);say("好呀。我来准备茶具……嗯，今天想喝带一点花香的薄荷茶。和你一起喝，感觉会更好喝。");addMemory("一起泡了薄荷茶，度过了安静的午前时光。");tick(35)}
+if(k==="book"){s.expression=s.familiarity>=5?"shy":"neutral";s.familiarity=clamp(s.familiarity+4);s.trust=clamp(s.trust+1);s.aff=clamp(s.aff+1);say("是一本关于植物和旅行的随笔。里面有一段写到春天的山间小路，我很喜欢。以后有机会的话，想和你一起去看看。");addMemory("知道了艾尔薇拉最近喜欢读植物与旅行随笔。");tick(20)}
 render()}
-function activity(name,cost,aff,mood){if(s.energy<cost){say("唔……我现在有点累了。要不先休息一会儿？");toast("体力不太够");return}s.energy-=cost;s.aff=clamp(s.aff+aff);s.mood=clamp(s.mood+mood);s.trust=clamp(s.trust+1);say(name+"的时候，艾尔薇拉看起来很放松。她轻轻笑了笑：「这样的时间也很珍贵呢。」");addMemory("一起"+name+"。");tick(35);togglePanel("life");}
+function activity(name,cost,aff,mood){if(s.energy<cost){s.expression="sleepy";render();say("唔……我现在有点累了。要不先休息一会儿？");toast("体力不太够");return}s.energy-=cost;s.expression=s.mood<25?"upset":"happy";s.aff=clamp(s.aff+aff);s.mood=clamp(s.mood+mood);s.trust=clamp(s.trust+1);say(name+"的时候，艾尔薇拉看起来很放松。她轻轻笑了笑：「这样的时间也很珍贵呢。」");addMemory("一起"+name+"。");tick(35);togglePanel("life");}
 function togglePanel(id){let p=$(id),was=p.classList.contains("open");document.querySelectorAll(".panel").forEach(x=>x.classList.remove("open"));if(!was)p.classList.add("open")}
 function advance(){s.day++;s.hour=8;s.minute=0;s.energy=clamp(s.energy+45);s.mood=clamp(s.mood+6);say("早上好。睡得还不错呢。今天也一起度过吧。");addMemory("开始了新的一天。");render();save();toast("新的一天开始了")}
 function save(){localStorage.setItem("elvira-v02",JSON.stringify(s));toast("进度已保存")}
